@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTML Text & Hyperlinks — Sections 4 & 5 Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Source+Code+Pro:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:      #1a1209;
+      --paper:    #faf6ef;
+      --accent:   #b5410a;
+      --soft:     #e8e0d0;
+      --muted:    #7a6f62;
+      --mark-bg:  #ffe566;
+      --code-bg:  #f0ebe2;
+      --border:   #c9bfb0;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      line-height: 1.75;
+      font-size: 1.05rem;
+    }
+
+    /* ── HERO ─────────────────────────────────────────── */
+    .hero {
+      background: var(--ink);
+      color: var(--paper);
+      padding: 5rem 2rem 4rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 40px,
+        rgba(181,65,10,.07) 40px,
+        rgba(181,65,10,.07) 41px
+      );
+    }
+    .hero-label {
+      font-family: 'Source Code Pro', monospace;
+      font-size: .75rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      position: relative;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 6vw, 4.5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      position: relative;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero-sub {
+      margin-top: 1.2rem;
+      font-size: 1rem;
+      color: #c4bbae;
+      position: relative;
+    }
+
+    /* ── LAYOUT ───────────────────────────────────────── */
+    .wrapper {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* ── SECTION CARDS ───────────────────────────────── */
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2.5rem 2.8rem;
+      margin: 2.5rem 0;
+      position: relative;
+    }
+    .card::before {
+      content: attr(data-tag);
+      font-family: 'Source Code Pro', monospace;
+      font-size: .7rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      position: absolute;
+      top: -0.65rem;
+      left: 1.5rem;
+      background: #fff;
+      padding: 0 .5rem;
+    }
+
+    /* ── HEADINGS ─────────────────────────────────────── */
+    .demo-headings h1 { font-family:'Playfair Display',serif; font-size:2.1rem; color:var(--ink); margin-bottom:.4rem; }
+    .demo-headings h2 { font-family:'Playfair Display',serif; font-size:1.7rem; color:var(--ink); margin-bottom:.4rem; }
+    .demo-headings h3 { font-family:'Lato',sans-serif; font-size:1.35rem; font-weight:700; margin-bottom:.4rem; }
+    .demo-headings h4 { font-size:1.1rem; font-weight:700; color:var(--muted); margin-bottom:.4rem; }
+    .demo-headings h5 { font-size:.95rem; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin-bottom:.4rem; }
+    .demo-headings h6 { font-size:.85rem; font-weight:400; color:#aaa; margin-bottom:.4rem; font-style:italic; }
+
+    /* ── GENERIC HEADING INSIDE CARDS ────────────────── */
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.55rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      padding-bottom: .5rem;
+      border-bottom: 2px solid var(--soft);
+    }
+    .section-label {
+      font-family: 'Source Code Pro', monospace;
+      font-size: .72rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: .3rem;
+    }
+
+    /* ── PARAGRAPHS ───────────────────────────────────── */
+    p { margin-bottom: 1rem; }
+
+    /* ── HR ──────────────────────────────────────────── */
+    hr {
+      border: none;
+      border-top: 2px solid var(--soft);
+      margin: 1.5rem 0;
+    }
+
+    /* ── PRE / CODE ───────────────────────────────────── */
+    pre {
+      background: var(--code-bg);
+      border-left: 4px solid var(--accent);
+      padding: 1.2rem 1.4rem;
+      font-family: 'Source Code Pro', monospace;
+      font-size: .88rem;
+      overflow-x: auto;
+      border-radius: 0 4px 4px 0;
+      margin-bottom: 1rem;
+      white-space: pre;
+    }
+    code {
+      font-family: 'Source Code Pro', monospace;
+      background: var(--code-bg);
+      padding: .15em .4em;
+      border-radius: 3px;
+      font-size: .88em;
+    }
+
+    /* ── BLOCKQUOTE / Q ───────────────────────────────── */
+    blockquote {
+      border-left: 4px solid var(--accent);
+      margin: 1rem 0;
+      padding: .8rem 1.4rem;
+      background: var(--code-bg);
+      font-style: italic;
+      color: var(--muted);
+    }
+    blockquote cite {
+      display: block;
+      margin-top: .5rem;
+      font-size: .85rem;
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    /* ── LISTS ───────────────────────────────────────── */
+    ul, ol { padding-left: 1.6rem; margin-bottom: 1rem; }
+    li { margin-bottom: .3rem; }
+    dl { margin-bottom: 1rem; }
+    dt { font-weight: 700; margin-top: .6rem; }
+    dd { padding-left: 1.4rem; color: var(--muted); }
+
+    /* ── INLINE SEMANTICS ────────────────────────────── */
+    mark { background: var(--mark-bg); padding: .05em .2em; border-radius: 2px; }
+    abbr { border-bottom: 1px dotted var(--muted); cursor: help; }
+    address { font-style: italic; color: var(--muted); line-height: 2; }
+    ins { text-decoration: underline; color: #2a7a2a; }
+    del { color: #999; }
+    s   { color: #aaa; }
+    kbd {
+      font-family: 'Source Code Pro', monospace;
+      background: var(--ink);
+      color: var(--paper);
+      padding: .1em .5em;
+      border-radius: 4px;
+      font-size: .82em;
+      box-shadow: 0 2px 0 rgba(0,0,0,.4);
+    }
+    var { font-style: italic; color: var(--accent); }
+    samp { font-family: 'Source Code Pro', monospace; color: #2a7a2a; }
+
+    /* ── LINKS ───────────────────────────────────────── */
+    a {
+      color: var(--accent);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: opacity .15s;
+    }
+    a:hover { opacity: .7; }
+
+    .link-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: .8rem;
+      margin-top: 1rem;
+    }
+    .link-card {
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: .9rem 1.1rem;
+      background: var(--paper);
+    }
+    .link-card .lc-label {
+      font-family: 'Source Code Pro', monospace;
+      font-size: .68rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: .3rem;
+    }
+    .link-card a { font-size: .95rem; display: block; }
+
+    /* ── PROGRESS / METER ────────────────────────────── */
+    progress, meter {
+      width: 100%;
+      height: 12px;
+      border-radius: 6px;
+      margin-bottom: .5rem;
+    }
+
+    /* ── TABLE OF CONTENTS NAV ───────────────────────── */
+    .toc {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1.5rem 2rem;
+      margin: 2rem 0;
+    }
+    .toc h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      margin-bottom: .8rem;
+    }
+    .toc ol { margin: 0; }
+    .toc li { margin-bottom: .25rem; font-size: .95rem; }
+
+    /* ── FOOTER ───────────────────────────────────────── */
+    footer {
+      background: var(--ink);
+      color: #a89c8e;
+      text-align: center;
+      padding: 2.5rem 1rem;
+      margin-top: 4rem;
+      font-size: .88rem;
+    }
+    footer a { color: var(--accent); }
+
+    /* ── CHIPS ────────────────────────────────────────── */
+    .chip {
+      display: inline-block;
+      background: var(--soft);
+      border-radius: 100px;
+      padding: .15em .7em;
+      font-size: .78rem;
+      font-family: 'Source Code Pro', monospace;
+      letter-spacing: .05em;
+      margin: .2em;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ HERO ════════════════════════════════════════════ -->
+<header class="hero">
+  <p class="hero-label">HTML Notes · Sections 4 &amp; 5</p>
+  <h1>Text Formatting<br><span>&amp; Hyperlinks</span></h1>
+  <p class="hero-sub">A live demonstration of every element covered in the notes</p>
+</header>
+
+<div class="wrapper">
+
+  <!-- ══ TABLE OF CONTENTS ══════════════════════════════ -->
+  <nav class="toc" aria-label="Page contents">
+    <h2>Contents</h2>
+    <ol>
+      <li><a href="#headings">§ 4.1 — Headings</a></li>
+      <li><a href="#paragraphs">§ 4.2 — Paragraphs &amp; Whitespace</a></li>
+      <li><a href="#breaks">§ 4.3 — Line Breaks &amp; Horizontal Rules</a></li>
+      <li><a href="#pre">§ 4.4 — Preformatted Text</a></li>
+      <li><a href="#quotes">§ 4.5 — Quotations</a></li>
+      <li><a href="#abbr">§ 4.6 — Abbreviations</a></li>
+      <li><a href="#address">§ 4.7 — Address</a></li>
+      <li><a href="#edits">§ 4.8 — Inserted, Deleted &amp; Stricken Text</a></li>
+      <li><a href="#inline">§ 4.9 — Inline Semantics</a></li>
+      <li><a href="#lists">§ 4.10 — Lists</a></li>
+      <li><a href="#links">§ 5 — Hyperlinks</a></li>
+    </ol>
+  </nav>
+
+  <!-- ══ §4.1 HEADINGS ══════════════════════════════════ -->
+  <section class="card demo-headings" id="headings" data-tag="§ 4.1 · Headings">
+    <p class="section-label">h1 – h6 hierarchy</p>
+    <h1>Heading Level 1 &lt;h1&gt;</h1>
+    <h2>Heading Level 2 &lt;h2&gt;</h2>
+    <h3>Heading Level 3 &lt;h3&gt;</h3>
+    <h4>Heading Level 4 &lt;h4&gt;</h4>
+    <h5>Heading Level 5 &lt;h5&gt;</h5>
+    <h6>Heading Level 6 &lt;h6&gt;</h6>
+    <p style="margin-top:1rem;font-size:.9rem;color:var(--muted);">
+      Each page should have exactly one <code>&lt;h1&gt;</code> describing the overall topic.
+      Never skip levels — screen readers navigate by heading hierarchy.
+    </p>
+  </section>
+
+  <!-- ══ §4.2 PARAGRAPHS ════════════════════════════════ -->
+  <section class="card" id="paragraphs" data-tag="§ 4.2 · Paragraphs">
+    <p class="section-title">Paragraphs &amp; Whitespace Collapse</p>
+    <p>
+      The <code>&lt;p&gt;</code> element represents a paragraph of text. Browsers automatically
+      add margin before and after each paragraph, creating visual separation without any extra markup.
+    </p>
+    <p>
+      This is a second paragraph. Notice the gap above — that's default browser styling.
+      Multiple&nbsp;&nbsp;&nbsp;spaces in HTML source are <strong>collapsed</strong> into a single
+      space when rendered, as the notes explain.
+    </p>
+    <p>
+      Paragraphs cannot contain block-level elements like another <code>&lt;p&gt;</code> or a
+      <code>&lt;div&gt;</code>, only inline content such as links, emphasis, or images.
+    </p>
+  </section>
+
+  <!-- ══ §4.3 LINE BREAKS & HR ══════════════════════════ -->
+  <section class="card" id="breaks" data-tag="§ 4.3 · Line Breaks &amp; Horizontal Rules">
+    <p class="section-title">Line Breaks &amp; Thematic Dividers</p>
+
+    <p class="section-label">Address using &lt;br&gt;</p>
+    <p>
+      123 Web Developer Lane<br>
+      Nairobi, Kiambu County<br>
+      Kenya 00100
+    </p>
+
+    <hr>
+
+    <p class="section-label">Poem using &lt;br&gt;</p>
+    <p>
+      Roses are <strong>red</strong>,<br>
+      Violets are <em>blue</em>,<br>
+      <code>&lt;br&gt;</code> breaks the line,<br>
+      And so does a new cue.
+    </p>
+
+    <hr>
+
+    <p style="font-size:.9rem;color:var(--muted);">
+      The <code>&lt;hr&gt;</code> above is a <em>thematic break</em> in HTML5 — not merely a
+      decorative line. Use it when the topic shifts, not just for visual spacing.
+    </p>
+  </section>
+
+  <!-- ══ §4.4 PRE ════════════════════════════════════════ -->
+  <section class="card" id="pre" data-tag="§ 4.4 · Preformatted Text">
+    <p class="section-title">Preformatted Text &amp; Code Blocks</p>
+    <p>
+      The <code>&lt;pre&gt;</code> element preserves every space, tab, and newline exactly as
+      written in the source. Ideal for code snippets and ASCII art.
+    </p>
+    <pre><code>function greet(name) {
+    // Preserved indentation!
+    console.log("Hello, " + name + "!");
+}
+
+greet("World");</code></pre>
+    <p>
+      Note: angle brackets inside <code>&lt;pre&gt;</code> must be escaped —
+      <code>&amp;lt;</code> for <code>&lt;</code> and <code>&amp;gt;</code> for <code>&gt;</code>.
+    </p>
+  </section>
+
+  <!-- ══ §4.5 QUOTATIONS ════════════════════════════════ -->
+  <section class="card" id="quotes" data-tag="§ 4.5 · Quotations">
+    <p class="section-title">Block Quotes, Inline Quotes &amp; Citations</p>
+
+    <p class="section-label">&lt;blockquote&gt; — long, block-level quote</p>
+    <blockquote cite="https://html.spec.whatwg.org/">
+      <p>The Web's markup language, HTML, is what makes documents and applications
+      renderable in a browser. It is the skeleton upon which everything else hangs.</p>
+      <cite>— WHATWG HTML Living Standard</cite>
+    </blockquote>
+
+    <p class="section-label" style="margin-top:1.2rem;">&lt;q&gt; — short, inline quote</p>
+    <p>
+      As Tim Berners-Lee once noted, <q>The Web does not just connect machines,
+      it connects people.</q> That insight remains as relevant today as ever.
+    </p>
+
+    <p class="section-label" style="margin-top:1.2rem;">&lt;cite&gt; — creative work reference</p>
+    <p>
+      The concept of hypertext was explored at length in
+      <cite>As We May Think</cite> by Vannevar Bush, published in 1945.
+    </p>
+  </section>
+
+  <!-- ══ §4.6 ABBREVIATIONS ══════════════════════════════ -->
+  <section class="card" id="abbr" data-tag="§ 4.6 · Abbreviations">
+    <p class="section-title">Abbreviations</p>
+    <p>
+      <abbr title="HyperText Markup Language">HTML</abbr> is maintained by the
+      <abbr title="World Wide Web Consortium">W3C</abbr> and the
+      <abbr title="Web Hypertext Application Technology Working Group">WHATWG</abbr>.
+      The current version, <abbr title="HTML version 5">HTML5</abbr>, is a
+      <abbr title="Cascading Style Sheets">CSS</abbr>-friendly living standard.
+    </p>
+    <p style="font-size:.88rem;color:var(--muted);">
+      Hover over any abbreviation above to see its full expansion in the tooltip
+      provided by the <code>title</code> attribute.
+    </p>
+  </section>
+
+  <!-- ══ §4.7 ADDRESS ════════════════════════════════════ -->
+  <section class="card" id="address" data-tag="§ 4.7 · Address">
+    <p class="section-title">Contact Information</p>
+    <p>This article was written by:</p>
+    <address>
+      Jane Doe, Web Developer<br>
+      <a href="mailto:jane@example.com">jane@example.com</a><br>
+      <a href="tel:+254700000000">+254 700 000 000</a><br>
+      Ruiru, Kiambu County, Kenya
+    </address>
+    <p style="margin-top:1rem;font-size:.88rem;color:var(--muted);">
+      <code>&lt;address&gt;</code> is specifically for <em>contact information</em> related
+      to the document or its author — not for arbitrary postal addresses.
+    </p>
+  </section>
+
+  <!-- ══ §4.8 EDITS ══════════════════════════════════════ -->
+  <section class="card" id="edits" data-tag="§ 4.8 · Inserted, Deleted &amp; Stricken Text">
+    <p class="section-title">Document Change Tracking</p>
+
+    <p>
+      My favourite language is <del>Java</del> <ins>HTML</ins>.
+    </p>
+    <p>
+      <s>Original price: KSh 4,999</s> — Now only <strong>KSh 1,999</strong>!
+    </p>
+    <p>
+      The event is scheduled for <del datetime="2025-06-10">10 June 2025</del>
+      <ins datetime="2025-07-15">15 July 2025</ins>.
+    </p>
+
+    <div style="margin-top:1rem;font-size:.88rem;color:var(--muted);">
+      <span class="chip">&lt;del&gt;</span> struck-through — deleted content<br>
+      <span class="chip">&lt;ins&gt;</span> underlined — newly inserted content<br>
+      <span class="chip">&lt;s&gt;</span> struck-through — no longer accurate
+    </div>
+  </section>
+
+  <!-- ══ §4.9 INLINE SEMANTICS ══════════════════════════ -->
+  <section class="card" id="inline" data-tag="§ 4.9 · Inline Semantics">
+    <p class="section-title">small · strong · em · mark · b · i · u</p>
+
+    <table style="width:100%;border-collapse:collapse;font-size:.93rem;">
+      <thead>
+        <tr style="background:var(--soft);">
+          <th style="padding:.5rem .8rem;text-align:left;border:1px solid var(--border);">Element</th>
+          <th style="padding:.5rem .8rem;text-align:left;border:1px solid var(--border);">Live Example</th>
+          <th style="padding:.5rem .8rem;text-align:left;border:1px solid var(--border);">Semantic meaning</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);"><code>&lt;small&gt;</code></td>
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);"><small>&copy; 2025 My Company. All rights reserved.</small></td>
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);">Side comments, fine print</td>
+        </tr>
+        <tr style="background:var(--paper);">
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);"><code>&lt;strong&gt;</code></td>
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);"><strong>Warning!</strong> This action is irreversible.</td>
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);">Strong importance / urgency</td>
+        </tr>
+        <tr>
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);"><code>&lt;em&gt;</code></td>
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);">I <em>love</em> coding with HTML.</td>
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);">Stress emphasis (changes meaning)</td>
+        </tr>
+        <tr style="background:var(--paper);">
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);"><code>&lt;mark&gt;</code></td>
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);">Don't forget to <mark>study</mark> for the exam.</td>
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);">Highlighted for reference</td>
+        </tr>
+        <tr>
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);"><code>&lt;b&gt;</code></td>
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);">The <b>HTML</b> element defines the page root.</td>
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);">Draw attention (no extra importance)</td>
+        </tr>
+        <tr style="background:var(--paper);">
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);"><code>&lt;i&gt;</code></td>
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);">The Latin phrase <i>carpe diem</i> means "seize the day".</td>
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);">Alternate voice, technical terms</td>
+        </tr>
+        <tr>
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);"><code>&lt;u&gt;</code></td>
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);">This word is <u>mispelled</u>.</td>
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);">Stylistically distinct (e.g. errors)</td>
+        </tr>
+        <tr style="background:var(--paper);">
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);"><code>&lt;kbd&gt;</code></td>
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);">Press <kbd>Ctrl</kbd> + <kbd>S</kbd> to save.</td>
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);">Keyboard input</td>
+        </tr>
+        <tr>
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);"><code>&lt;var&gt;</code></td>
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);">Where <var>E</var> = <var>mc</var><sup>2</sup>.</td>
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);">Mathematical / programming variable</td>
+        </tr>
+        <tr style="background:var(--paper);">
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);"><code>&lt;samp&gt;</code></td>
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);">Terminal output: <samp>Build succeeded in 0.4s</samp></td>
+          <td style="padding:.5rem .8rem;border:1px solid var(--border);">Sample program output</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ══ §4.10 LISTS ════════════════════════════════════ -->
+  <section class="card" id="lists" data-tag="§ 4.10 · Lists">
+    <p class="section-title">Ordered, Unordered, Definition &amp; Nested Lists</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;">
+      <div>
+        <p class="section-label">Ordered list &lt;ol&gt; (default)</p>
+        <ol>
+          <li>Open your text editor</li>
+          <li>Write your HTML</li>
+          <li>Save as <code>.html</code></li>
+          <li>Open in a browser</li>
+        </ol>
+
+        <p class="section-label" style="margin-top:1.2rem;">Ordered list — type="A"</p>
+        <ol type="A">
+          <li>Alpha option</li>
+          <li>Beta option</li>
+          <li>Gamma option</li>
+        </ol>
+
+        <p class="section-label" style="margin-top:1.2rem;">Ordered list — start="5" reversed</p>
+        <ol start="5" reversed>
+          <li>Fifth item (counts down)</li>
+          <li>Fourth item</li>
+          <li>Third item</li>
+        </ol>
+      </div>
+
+      <div>
+        <p class="section-label">Unordered list &lt;ul&gt;</p>
+        <ul>
+          <li>HTML — structure</li>
+          <li>CSS — presentation</li>
+          <li>JavaScript — behaviour</li>
+        </ul>
+
+        <p class="section-label" style="margin-top:1.2rem;">Nested list</p>
+        <ul>
+          <li>Front-end
+            <ul>
+              <li>HTML</li>
+              <li>CSS</li>
+            </ul>
+          </li>
+          <li>Back-end
+            <ul>
+              <li>Node.js</li>
+              <li>Python</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="section-label" style="margin-top:1.5rem;">Definition list &lt;dl&gt;</p>
+    <dl>
+      <dt>HTML</dt>
+      <dd>HyperText Markup Language — the backbone of every web page.</dd>
+      <dt>CSS</dt>
+      <dd>Cascading Style Sheets — controls the visual presentation.</dd>
+      <dt>DOM</dt>
+      <dd>Document Object Model — the browser's tree-like representation of the page.</dd>
+    </dl>
+  </section>
+
+  <!-- ══ §5 HYPERLINKS ══════════════════════════════════ -->
+  <section class="card" id="links" data-tag="§ 5 · Hyperlinks">
+    <p class="section-title">The &lt;a&gt; Element — All Link Types</p>
+
+    <div class="link-grid">
+
+      <div class="link-card">
+        <p class="lc-label">Absolute URL</p>
+        <a href="https://developer.mozilla.org" target="_blank" rel="noopener noreferrer">
+          MDN Web Docs ↗
+        </a>
+        <p style="font-size:.78rem;color:var(--muted);margin-top:.3rem;">Opens in new tab safely using <code>rel="noopener noreferrer"</code></p>
+      </div>
+
+      <div class="link-card">
+        <p class="lc-label">Relative URL</p>
+        <a href="page.html">Go to page.html</a>
+        <p style="font-size:.78rem;color:var(--muted);margin-top:.3rem;">Relative to current directory — portable across domains</p>
+      </div>
+
+      <div class="link-card">
+        <p class="lc-label">Anchor / Bookmark</p>
+        <a href="#headings">↑ Jump to Headings</a>
+        <p style="font-size:.78rem;color:var(--muted);margin-top:.3rem;"><code>href="#id"</code> scrolls to an element on the same page</p>
+      </div>
+
+      <div class="link-card">
+        <p class="lc-label">Email link</p>
+        <a href="mailto:hello@example.com?subject=Hello&body=How%20are%20you?">
+          Email us
+        </a>
+        <p style="font-size:.78rem;color:var(--muted);margin-top:.3rem;">Uses <code>mailto:</code> scheme with pre-filled subject &amp; body</p>
+      </div>
+
+      <div class="link-card">
+        <p class="lc-label">Telephone link</p>
+        <a href="tel:+254700000000">+254 700 000 000</a>
+        <p style="font-size:.78rem;color:var(--muted);margin-top:.3rem;">Uses <code>tel:</code> scheme — tappable on mobile</p>
+      </div>
+
+      <div class="link-card">
+        <p class="lc-label">Download link</p>
+        <a href="notes.pdf" download="html-notes.pdf">⬇ Download PDF</a>
+        <p style="font-size:.78rem;color:var(--muted);margin-top:.3rem;">The <code>download</code> attribute sets the saved filename</p>
+      </div>
+
+      <div class="link-card">
+        <p class="lc-label">rel="nofollow"</p>
+        <a href="https://example.com" rel="nofollow">Sponsored link</a>
+        <p style="font-size:.78rem;color:var(--muted);margin-top:.3rem;">Tells search engines not to follow or pass ranking authority</p>
+      </div>
+
+      <div class="link-card">
+        <p class="lc-label">Image as link</p>
+        <a href="https://html.spec.whatwg.org/" target="_blank" rel="noopener noreferrer">
+          <img src="https://www.w3.org/html/logo/badge/html5-badge-h-solo.png"
+               alt="HTML5 logo"
+               width="40" height="58"
+               style="display:block;margin-top:.3rem;">
+        </a>
+        <p style="font-size:.78rem;color:var(--muted);margin-top:.3rem;">Wrap <code>&lt;img&gt;</code> inside <code>&lt;a&gt;</code> to make it clickable</p>
+      </div>
+
+    </div>
+
+    <!-- target attribute summary -->
+    <p class="section-label" style="margin-top:2rem;">target attribute values</p>
+    <table style="width:100%;border-collapse:collapse;font-size:.9rem;margin-top:.5rem;">
+      <tr style="background:var(--soft);">
+        <th style="padding:.4rem .8rem;text-align:left;border:1px solid var(--border);">Value</th>
+        <th style="padding:.4rem .8rem;text-align:left;border:1px solid var(--border);">Behaviour</th>
+      </tr>
+      <tr><td style="padding:.4rem .8rem;border:1px solid var(--border);"><code>_self</code></td><td style="padding:.4rem .8rem;border:1px solid var(--border);">Same tab (default)</td></tr>
+      <tr style="background:var(--paper);"><td style="padding:.4rem .8rem;border:1px solid var(--border);"><code>_blank</code></td><td style="padding:.4rem .8rem;border:1px solid var(--border);">New tab / window</td></tr>
+      <tr><td style="padding:.4rem .8rem;border:1px solid var(--border);"><code>_parent</code></td><td style="padding:.4rem .8rem;border:1px solid var(--border);">Parent browsing context</td></tr>
+      <tr style="background:var(--paper);"><td style="padding:.4rem .8rem;border:1px solid var(--border);"><code>_top</code></td><td style="padding:.4rem .8rem;border:1px solid var(--border);">Full window — breaks out of frames</td></tr>
+    </table>
+
+    <p style="margin-top:1.2rem;font-size:.88rem;color:var(--muted);">
+      Always add <code>rel="noopener noreferrer"</code> when using
+      <code>target="_blank"</code> to prevent the new page accessing
+      <code>window.opener</code> (reverse tabnapping vulnerability).
+    </p>
+  </section>
+
+</div><!-- /wrapper -->
+
+<!-- ══ FOOTER ═════════════════════════════════════════ -->
+<footer>
+  <p>
+    Demo page for <strong style="color:var(--paper);">HyperText Markup Language</strong> —
+    Sections 4 &amp; 5<br>
+    <small>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/HTML">MDN Web Docs</a> ·
+      <a href="https://html.spec.whatwg.org/">WHATWG Living Standard</a> ·
+      <a href="https://validator.w3.org/">W3C Validator</a>
+    </small>
+  </p>
+</footer>
+
+</body>
+</html>
